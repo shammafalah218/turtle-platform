@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 export default function Home() {
   return (
     <main
@@ -88,25 +86,20 @@ export default function Home() {
             <h3>📊 Dashboard</h3>
             <p>Display turtle project data in a simple organized way.</p>
           </div>
-
-          <div style={cardStyle}>
-            <h3>ℹ️ About Project</h3>
-            <p>Explain the platform purpose, features, and technologies used.</p>
-          </div>
         </div>
       </section>
     </main>
   );
 }
 
-const cardStyle: CSSProperties = {
+const cardStyle = {
   background: "#ecfdf5",
   padding: "20px",
   borderRadius: "15px",
   border: "1px solid #99f6e4",
 };
 
-const buttonStyle: CSSProperties = {
+const buttonStyle = {
   display: "inline-block",
   background: "#0f766e",
   color: "white",
