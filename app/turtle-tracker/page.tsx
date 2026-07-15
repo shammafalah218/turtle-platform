@@ -1,158 +1,447 @@
-export default function TurtleTracker() {
+"use client";
+
+import { useState } from "react";
+import type { CSSProperties } from "react";
+
+type Turtle = {
+  id: string;
+  name: string;
+  location: string;
+  habitat: string;
+  status: string;
+  risk: string;
+  lat: number;
+  lng: number;
+  pinStyle: CSSProperties;
+};
+
+const turtles: Turtle[] = [
+  {
+    id: "T-001",
+    name: "Fujairah Turtle",
+    location: "Offshore Fujairah Coast",
+    habitat: "Feeding Area",
+    status: "Active Tracking",
+    risk: "Medium",
+    lat: 25.145,
+    lng: 56.485,
+    pinStyle: { left: "47%", top: "62%" },
+  },
+  {
+    id: "T-002",
+    name: "Khor Fakkan Turtle",
+    location: "Offshore Khor Fakkan",
+    habitat: "Migration Route",
+    status: "Moving",
+    risk: "Low",
+    lat: 25.335,
+    lng: 56.49,
+    pinStyle: { left: "52%", top: "43%" },
+  },
+  {
+    id: "T-003",
+    name: "Dibba Turtle",
+    location: "Offshore Dibba Coast",
+    habitat: "Resting Area",
+    status: "Needs Monitoring",
+    risk: "High",
+    lat: 25.62,
+    lng: 56.5,
+    pinStyle: { left: "57%", top: "22%" },
+  },
+];
+
+export default function TurtleTrackerPage() {
+  const [selectedId, setSelectedId] = useState("ALL");
+
+  const selectedTurtle = turtles.find((turtle) => turtle.id === selectedId);
+
+  const mapUrl =
+    selectedId === "ALL"
+      ? "https://www.google.com/maps?q=25.37,56.49&z=9&output=embed"
+      : "https://www.google.com/maps?q=" +
+        selectedTurtle?.lat +
+        "," +
+        selectedTurtle?.lng +
+        "&z=11&output=embed";
+
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#f0fdfa",
-        fontFamily: "Arial, sans-serif",
-        padding: "40px",
-        color: "#123",
-      }}
-    >
-      <section style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <a
-          href="/"
-          style={{
-            color: "#0f766e",
-            textDecoration: "none",
-            fontWeight: "bold",
-          }}
-        >
-          ← Back to Home
+    <main style={pageStyle}>
+      <nav style={navStyle}>
+        <a href="/home" style={logoStyle}>
+          <img src="/logo.png" alt="Marine Turtle Tracker logo" style={logoImageStyle} />
+          <span style={logoTextStyle}>Marine Turtle Tracker</span>
         </a>
 
-        <h1
-          style={{
-            fontSize: "40px",
-            color: "#0f766e",
-            marginTop: "25px",
-          }}
-        >
-          Turtle Tracker
-        </h1>
+        <div style={navLinksStyle}>
+          <a href="/home" style={navLinkStyle}>Home</a>
+          <a href="/dashboard" style={navLinkStyle}>Dashboard</a>
+          
+          <a href="/risk-zones" style={navLinkStyle}>Risk Zones</a>
+          <a href="/about" style={navLinkStyle}>About</a>
+        </div>
+      </nav>
 
-        <p
-          style={{
-            fontSize: "18px",
-            color: "#475569",
-            lineHeight: "1.7",
-            maxWidth: "850px",
-          }}
-        >
-          This page shows sample turtle tracking information. The goal is to
-          visualize turtle movement routes and identify important locations along
-          the coast.
+      <section style={heroStyle}>
+        <p style={badgeStyle}>LIVE TURTLE TRACKER</p>
+        <h1 style={titleStyle}>Marine Turtle Movement Map</h1>
+        <p style={descriptionStyle}>
+          Select one turtle to view its exact location, or click All to display
+          all tracked turtles on the map.
         </p>
+      </section>
 
-        <div
-          style={{
-            background: "white",
-            borderRadius: "20px",
-            padding: "30px",
-            marginTop: "30px",
-            boxShadow: "0 4px 18px rgba(0,0,0,0.08)",
-          }}
-        >
-          <h2 style={{ color: "#0f766e" }}>Sample Tracking Map</h2>
+      <section style={contentStyle}>
+        <div style={mapCardStyle}>
+          <div style={mapHeaderStyle}>
+            <div>
+              <h2 style={sectionTitleStyle}>Selected Turtle Location</h2>
+              <p style={subTextStyle}>
+                Showing:{" "}
+                <strong>
+                  {selectedId === "ALL"
+                    ? "All Tracked Turtles"
+                    : `${selectedTurtle?.id} — ${selectedTurtle?.location}`}
+                </strong>
+              </p>
+            </div>
 
-          <div
-            style={{
-              height: "360px",
-              background:
-                "linear-gradient(135deg, #bae6fd 0%, #ccfbf1 50%, #d9f99d 100%)",
-              borderRadius: "18px",
-              marginTop: "20px",
-              position: "relative",
-              overflow: "hidden",
-              border: "2px solid #99f6e4",
-            }}
-          >
-            <div style={pointOne}>🐢 T-001</div>
-            <div style={pointTwo}>🐢 T-002</div>
-            <div style={pointThree}>⚠️ Risk Zone</div>
+            <span style={activeBadgeStyle}>● Map Active</span>
+          </div>
 
-            <div
-              style={{
-                position: "absolute",
-                left: "15%",
-                top: "55%",
-                width: "70%",
-                borderTop: "4px dashed #0f766e",
-                transform: "rotate(-12deg)",
-              }}
-            ></div>
+          <div style={selectedInfoStyle}>
+            {selectedId === "ALL" ? (
+              <>
+                <strong>All Turtle Locations</strong>
+                <span>
+                  Fujairah Coast, Khor Fakkan, and Dibba Coast are displayed on the map.
+                </span>
+              </>
+            ) : (
+              <>
+                <strong>
+                  {selectedTurtle?.id} {selectedTurtle?.name}
+                </strong>
+                <span>
+                  Location: {selectedTurtle?.location} | Habitat: {selectedTurtle?.habitat}
+                </span>
+              </>
+            )}
+
+            <a
+              href={
+                selectedId === "ALL"
+                  ? "https://www.google.com/maps?q=25.37,56.49"
+                  : `https://www.google.com/maps?q=${selectedTurtle?.lat},${selectedTurtle?.lng}`
+              }
+              target="_blank"
+              style={googleButtonStyle}
+            >
+              Open in Google Maps</a>
+          </div>
+
+          <div style={mapWrapperStyle}>
+            <iframe
+              src={mapUrl}
+              style={iframeStyle}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+
+            {selectedId === "ALL" &&
+              turtles.map((turtle) => (
+                <div
+                  key={turtle.id}
+                  style={{
+                    ...allPinStyle,
+                    ...turtle.pinStyle,
+                  }}
+                >
+                  📍 {turtle.id}
+                </div>
+              ))}
           </div>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: "20px",
-            marginTop: "30px",
-          }}
-        >
-          <div style={cardStyle}>
-            <h3>🐢 Turtle T-001</h3>
-            <p>Location: Fujairah Coast</p>
-            <p>Status: Active tracking</p>
-            <p>Habitat: Feeding area</p>
-          </div>
+        <div style={listCardStyle}>
+          <h2 style={sectionTitleStyle}>Tracking List</h2>
+          <p style={subTextStyle}>
+            Click All to show every turtle, or select one turtle ID.
+          </p>
 
-          <div style={cardStyle}>
-            <h3>🐢 Turtle T-002</h3>
-            <p>Location: Khor Fakkan</p>
-            <p>Status: Migration route</p>
-            <p>Habitat: Coastal movement</p>
-          </div>
+          <button
+            onClick={() => setSelectedId("ALL")}
+            style={{
+              ...allButtonStyle,
+              ...(selectedId === "ALL" ? selectedButtonStyle : {}),
+            }}
+          >
+            🌍 ALL TURTLES
+            <span style={buttonSmallTextStyle}>
+              Show all turtle locations on the map
+            </span>
+          </button>
 
-          <div style={cardStyle}>
-            <h3>⚠️ Risk Alert</h3>
-            <p>Area: Boat activity zone</p>
-            <p>Risk Level: Medium</p>
-            <p>Action: Monitor movement</p>
-          </div>
+          {turtles.map((turtle) => (
+            <button
+              key={turtle.id}
+              onClick={() => setSelectedId(turtle.id)}
+              style={{
+                ...turtleButtonStyle,
+                ...(selectedId === turtle.id ? selectedButtonStyle : {}),
+              }}
+            >
+              <span style={turtleIconStyle}>🐢</span>
+
+              <div style={buttonTextStyle}>
+                <strong>
+                  {turtle.id} {turtle.name}
+                </strong>
+                <span>Location: {turtle.location}</span>
+                <span>Status: {turtle.status}</span>
+                <span>Habitat: {turtle.habitat}</span>
+              </div>
+            </button>
+          ))}
         </div>
       </section>
     </main>
   );
 }
 
-const cardStyle = {
-  background: "white",
-  borderRadius: "16px",
-  padding: "22px",
-  boxShadow: "0 4px 18px rgba(0,0,0,0.08)",
+const pageStyle: CSSProperties = {
+  minHeight: "100vh",
+  background:
+    "radial-gradient(circle at top left, #99f6e4 0, transparent 28%), linear-gradient(135deg, #ecfeff 0%, #f8fafc 50%, #ffffff 100%)",
+  fontFamily: "Arial, sans-serif",
+  color: "#0f172a",
+  padding: "24px",
+};
+
+const navStyle: CSSProperties = {
+  maxWidth: "1180px",
+  margin: "0 auto 28px auto",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  background: "rgba(255,255,255,0.92)",
+  padding: "14px 22px",
+  borderRadius: "26px",
+  boxShadow: "0 14px 34px rgba(15,118,110,0.12)",
   border: "1px solid #99f6e4",
 };
 
-const pointOne = {
-  position: "absolute" as const,
-  left: "15%",
-  top: "55%",
-  background: "white",
+const logoStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "12px",
+  textDecoration: "none",
+};
+
+const logoImageStyle: CSSProperties = {
+  width: "76px",
+  height: "76px",
+  objectFit: "contain",
+};
+
+const logoTextStyle: CSSProperties = {
+  color: "#0f766e",
+  fontWeight: "bold",
+  fontSize: "24px",
+};
+
+const navLinksStyle: CSSProperties = {
+  display: "flex",
+  gap: "10px",
+  flexWrap: "wrap",
+};
+
+const navLinkStyle: CSSProperties = {
+  color: "#0f766e",
+  textDecoration: "none",
+  fontWeight: "bold",
   padding: "10px 14px",
-  borderRadius: "12px",
+  borderRadius: "999px",
+  background: "#ecfdf5",
+  border: "1px solid #99f6e4",
+};
+
+const heroStyle: CSSProperties = {
+  maxWidth: "1180px",
+  margin: "0 auto 28px auto",
+  background: "rgba(255,255,255,0.92)",
+  borderRadius: "30px",
+  padding: "36px",
+  boxShadow: "0 18px 42px rgba(15,118,110,0.12)",
+  border: "1px solid #99f6e4",
+};
+
+const badgeStyle: CSSProperties = {
+  display: "inline-block",
+  background: "#ccfbf1",
+  color: "#0f766e",
+  padding: "10px 16px",
+  borderRadius: "999px",
   fontWeight: "bold",
 };
 
-const pointTwo = {
-  position: "absolute" as const,
-  right: "18%",
-  top: "35%",
-  background: "white",
+const titleStyle: CSSProperties = {
+  color: "#115e59",
+  fontSize: "46px",
+  margin: "18px 0",
+};
+
+const descriptionStyle: CSSProperties = {
+  color: "#334155",
+  fontSize: "17px",
+  lineHeight: "1.7",
+};
+
+const contentStyle: CSSProperties = {
+  maxWidth: "1180px",
+  margin: "0 auto",
+  display: "grid",
+  gridTemplateColumns: "1.5fr 1fr",
+  gap: "24px",
+  alignItems:"start",
+};
+
+const mapCardStyle: CSSProperties = {
+  background: "rgba(255,255,255,0.94)",
+  borderRadius: "28px",
+  padding: "24px",
+  boxShadow: "0 18px 42px rgba(15,118,110,0.12)",
+  border: "1px solid #99f6e4",
+};
+
+const listCardStyle: CSSProperties = {
+  background: "rgba(255,255,255,0.94)",
+  borderRadius: "28px",
+  padding: "24px",
+  boxShadow: "0 18px 42px rgba(15,118,110,0.12)",
+  border: "1px solid #99f6e4",
+};
+
+const mapHeaderStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "18px",
+  alignItems: "center",
+};
+
+const sectionTitleStyle: CSSProperties = {
+  color: "#115e59",
+  marginTop: 0,
+  marginBottom: "6px",
+};
+
+const subTextStyle: CSSProperties = {
+  color: "#475569",
+  lineHeight: "1.6",
+};
+
+const activeBadgeStyle: CSSProperties = {
+  background: "#dcfce7",
+  color: "#166534",
   padding: "10px 14px",
-  borderRadius: "12px",
+  borderRadius: "999px",
+  fontWeight: "bold",
+  whiteSpace: "nowrap",
+};
+
+const selectedInfoStyle: CSSProperties = {
+  background: "#f0fdfa",
+  border: "1px solid #99f6e4",
+  borderRadius: "18px",
+  padding: "16px",
+  margin: "18px 0",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: "14px",
+  flexWrap: "wrap",
+  color: "#334155",
+};
+
+const googleButtonStyle: CSSProperties = {
+  background: "#0f766e",
+  color: "white",
+  textDecoration: "none",
+  padding: "12px 18px",
+  borderRadius: "14px",
   fontWeight: "bold",
 };
 
-const pointThree = {
-  position: "absolute" as const,
-  right: "28%",
-  bottom: "20%",
-  background: "#fee2e2",
-  color: "#991b1b",
-  padding: "10px 14px",
-  borderRadius: "12px",
+const mapWrapperStyle: CSSProperties = {
+  height: "450px",
+  borderRadius: "22px",
+  overflow: "hidden",
+  border: "1px solid #99f6e4",
+  position: "relative",
+};
+
+const iframeStyle: CSSProperties = {
+  width: "100%",
+  height: "100%",
+  border: 0,
+};
+
+const allPinStyle: CSSProperties = {
+  position: "absolute",
+  background: "#0f766e",
+  color: "white",
+  padding: "8px 12px",
+  borderRadius: "999px",
   fontWeight: "bold",
+  boxShadow: "0 10px 25px rgba(15,118,110,0.25)",
+  zIndex: 5,
+};
+
+const allButtonStyle: CSSProperties = {
+  width: "100%",
+  textAlign: "left",
+  padding: "18px",
+  borderRadius: "18px",
+  border: "2px solid #0f766e",
+  background: "#ccfbf1",
+  color: "#0f766e",
+  cursor: "pointer",
+  marginBottom: "16px",
+  fontWeight: "bold",
+  fontSize: "16px",
+};
+
+const turtleButtonStyle: CSSProperties = {
+  width: "100%",
+  display: "flex",
+  gap: "16px",
+  textAlign: "left",
+  padding: "18px",
+  borderRadius: "18px",
+  border: "1px solid #99f6e4",
+  background: "#f0fdfa",
+  cursor: "pointer",
+  marginBottom: "14px",
+};
+
+const selectedButtonStyle: CSSProperties = {
+  background: "#ccfbf1",
+  border: "2px solid #0f766e",
+};
+
+const turtleIconStyle: CSSProperties = {
+  fontSize: "24px",
+};
+
+const buttonTextStyle: CSSProperties = {
+  display: "grid",
+  gap: "7px",
+  color: "#334155",
+};
+
+const buttonSmallTextStyle: CSSProperties = {
+  display: "block",
+  color: "#475569",
+  fontWeight: "normal",
+  marginTop: "6px",
 };

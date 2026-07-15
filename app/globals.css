@@ -1,26 +1,63 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ecfeff;
+}
+
+a {
+  cursor: pointer;
+}
+/* Moving turtles background */
+.floating-turtle {
+  position: fixed;
+  left: -120px;
+  pointer-events: none;
+  opacity: 0.16;
+  z-index: 1;
+  animation-name: turtleSwim;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  filter: drop-shadow(0 8px 12px rgba(15, 118, 110, 0.18));
+}
+
+.turtle-one {
+  top: 18%;
+  font-size: 42px;
+  animation-duration: 24s;
+}
+
+.turtle-two {
+  top: 52%;
+  font-size: 56px;
+  animation-duration: 30s;
+  animation-delay: -8s;
+}
+
+.turtle-three {
+  top: 78%;
+  font-size: 38px;
+  animation-duration: 27s;
+  animation-delay: -14s;
+}
+
+@keyframes turtleSwim {
+  0% {
+    transform: translateX(-140px) translateY(0) rotate(-8deg);
+  }
+
+  50% {
+    transform: translateX(55vw) translateY(-28px) rotate(8deg);
+  }
+
+  100% {
+    transform: translateX(calc(100vw + 160px)) translateY(18px) rotate(-6deg);
+  }
 }

@@ -1,117 +1,104 @@
 import type { CSSProperties } from "react";
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#f4f8f7",
-        fontFamily: "Arial, sans-serif",
-        color: "#123",
-        padding: "40px",
-      }}
-    >
-      <section
-        style={{
-          maxWidth: "1000px",
-          margin: "0 auto",
-          background: "white",
-          borderRadius: "20px",
-          padding: "40px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h1 style={{ fontSize: "42px", marginBottom: "10px", color: "#0f766e" }}>
-          Turtle SafePath AI
-        </h1>
+    <main style={pageStyle}>
+      <div className="floating-turtle turtle-one">🐢</div>
+<div className="floating-turtle turtle-two">🐢</div>
+<div className="floating-turtle turtle-three">🐢</div>
+      <div style={cardStyle}>
+        <img
+          src="/logo.png"
+          alt="Marine Turtle Tracker logo"
+          style={logoStyle}
+        />
 
-        <h2 style={{ fontSize: "22px", fontWeight: "normal", color: "#334155" }}>
-          Marine Turtle Tracking and Habitat Analytics Platform
-        </h2>
+        <h1 style={titleStyle}>Marine Turtle Tracker</h1>
 
-        <p style={{ fontSize: "18px", lineHeight: "1.7", marginTop: "25px" }}>
-          This platform is designed to help study marine turtle movement using
-          tracking data, artificial intelligence, and geospatial analysis. It aims
-          to support turtle conservation by showing movement routes, important
-          habitat areas, and possible risk zones.
+        <p style={textStyle}>
+          Please login or register to access the turtle tracking platform.
         </p>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "15px",
-            marginTop: "30px",
-            flexWrap: "wrap",
-          }}
-        >
-          <a href="/dashboard" style={buttonStyle}>
-            Open Dashboard
+        <div style={buttonRowStyle}>
+          <a href="/login" style={loginButtonStyle}>
+            Login
           </a>
 
-          <a href="/turtle-tracker" style={buttonStyle}>
-            Open Turtle Tracker
-          </a>
-
-          <a href="/risk-zones" style={buttonStyle}>
-            Open Risk Zones
-          </a>
-
-          <a href="/about" style={buttonStyle}>
-            About Project
+          <a href="/register" style={registerButtonStyle}>
+            Registration
           </a>
         </div>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: "20px",
-            marginTop: "35px",
-          }}
-        >
-          <div style={cardStyle}>
-            <h3>🐢 Turtle Tracking</h3>
-            <p>View turtle movement routes and tracking information.</p>
-          </div>
-
-          <div style={cardStyle}>
-            <h3>🗺️ Habitat Analysis</h3>
-            <p>Understand feeding, resting, and migration areas.</p>
-          </div>
-
-          <div style={cardStyle}>
-            <h3>⚠️ Risk Zones</h3>
-            <p>Identify possible threats such as boats and coastal activity.</p>
-          </div>
-
-          <div style={cardStyle}>
-            <h3>📊 Dashboard</h3>
-            <p>Display turtle project data in a simple organized way.</p>
-          </div>
-
-          <div style={cardStyle}>
-            <h3>ℹ️ About Project</h3>
-            <p>Explain the platform purpose, features, and technologies used.</p>
-          </div>
-        </div>
-      </section>
+      </div>
     </main>
   );
 }
 
-const cardStyle: CSSProperties = {
-  background: "#ecfdf5",
-  padding: "20px",
-  borderRadius: "15px",
-  border: "1px solid #99f6e4",
+const pageStyle: CSSProperties = {
+  minHeight: "100vh",
+  background:
+    "radial-gradient(circle at top left, #99f6e4 0, transparent 30%), linear-gradient(135deg, #ecfeff 0%, #f8fafc 55%, #ffffff 100%)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontFamily: "Arial, sans-serif",
+  padding: "24px",
 };
 
-const buttonStyle: CSSProperties = {
-  display: "inline-block",
+const cardStyle: CSSProperties = {
+  width: "100%",
+  maxWidth: "520px",
+  background: "rgba(255,255,255,0.94)",
+  borderRadius: "34px",
+  padding: "42px",
+  border: "1px solid #99f6e4",
+  boxShadow: "0 24px 60px rgba(15,118,110,0.16)",
+  textAlign: "center",
+};
+
+const logoStyle: CSSProperties = {
+  width: "110px",
+  height: "110px",
+  objectFit: "contain",
+  marginBottom: "14px",
+};
+
+const titleStyle: CSSProperties = {
+  color: "#115e59",
+  fontSize: "40px",
+  margin: "10px 0",
+};
+
+const textStyle: CSSProperties = {
+  color: "#475569",
+  fontSize: "17px",
+  lineHeight: "1.6",
+  marginBottom: "28px",
+};
+
+const buttonRowStyle: CSSProperties = {
+  display: "flex",
+  gap: "14px",
+  justifyContent: "center",
+  flexWrap: "wrap",
+};
+
+const loginButtonStyle: CSSProperties = {
   background: "#0f766e",
   color: "white",
-  padding: "14px 22px",
-  borderRadius: "10px",
+  padding: "15px 28px",
+  borderRadius: "14px",
   textDecoration: "none",
   fontWeight: "bold",
+  minWidth: "140px",
+};
+
+const registerButtonStyle: CSSProperties = {
+  background: "white",
+  color: "#0f766e",
+  padding: "15px 28px",
+  borderRadius: "14px",
+  textDecoration: "none",
+  fontWeight: "bold",
+  border: "1px solid #5eead4",
+  minWidth: "140px",
 };
