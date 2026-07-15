@@ -18,27 +18,31 @@ export default function RegisterPage() {
       return;
     }
 
-    const response = await fetch("/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fullName,
-        email,
-        password,
-      }),
-    });
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName,
+          email,
+          password,
+        }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      alert(data.message);
-      return;
+      if (!response.ok) {
+        alert(data.message || "Registration failed.");
+        return;
+      }
+
+      alert("Registration successful! Please login.");
+      router.push("/login");
+    } catch {
+      alert("Something went wrong. Please try again.");
     }
-
-    alert("Registration successful! Please login.");
-    router.push("/login");
   }
 
   return (
@@ -163,15 +167,14 @@ const labelStyle: CSSProperties = {
 };
 
 const inputStyle: CSSProperties = {
-  width: "100%",
-  padding: "14px",
+  width: "100%",padding: "14px",
   borderRadius: "14px",
   border: "1px solid #99f6e4",
   fontSize: "15px",
   outline: "none",
 };
 
-const buttonStyle: CSSProperties= {
+const buttonStyle: CSSProperties = {
   marginTop: "12px",
   padding: "14px",
   borderRadius: "14px",
