@@ -36,7 +36,7 @@ export default function LandingPage() {
       </nav>
 
       <section style={heroStyle}>
-        <p style={tagStyle}>Marine Conservation Platform</p>
+        
 
         <h1 style={titleStyle}>Track. Monitor. Protect.</h1>
 
