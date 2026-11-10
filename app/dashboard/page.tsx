@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function loadTurtles() {
-      const response = await fetch("/api/turtles");
+      const response = await fetch("https://qor3ceidfc.execute-api.eu-north-1.amazonaws.com/turtles");
       const result = await response.json();
       setTurtles(result.data);
       setLoading(false);
