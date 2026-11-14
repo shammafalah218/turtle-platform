@@ -119,7 +119,7 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <span style={databaseBadgeStyle}>PostgreSQL + Prisma</span>
+            <span style={databaseBadgeStyle}>AWS DynamoDB</span>
           </div>
 
           {loading ? (
