@@ -62,10 +62,10 @@ export default function Dashboard() {
           </h1>
 
           <p style={descriptionStyle}>
-            This dashboard displays turtle tracking data from the backend API and
-            PostgreSQL database. It helps organize turtle records, habitat
-            information, and risk levels in one clean view.
-          </p>
+  This dashboard displays turtle tracking data from AWS DynamoDB
+  through API Gateway and Lambda. It helps organize turtle records,
+  habitat information, and risk levels in one clean view.
+</p>
         </div>
 
         <div style={statusCardStyle}>
